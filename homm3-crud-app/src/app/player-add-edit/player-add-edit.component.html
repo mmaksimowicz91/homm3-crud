@@ -47,14 +47,42 @@
     </mat-radio-group>
   </div>
   <div class="row">
+    <mat-radio-group aria-label="Select an option">
+      <mat-label><b>Preferred Starting Bonus</b></mat-label>
+      <mat-radio-button value="random">Random</mat-radio-button>
+      <mat-radio-button value="artifact">Artifact</mat-radio-button>
+      <mat-radio-button value="gold">Gold</mat-radio-button>
+      <mat-radio-button value="resource">Resource</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="row">
     <mat-form-field appearance="outline">
       <mat-label>Favorite Faction</mat-label>
-      <mat-select>
+      <mat-select
+        [(ngModel)]="selectedFaction"
+        (ngModelChange)="onFactionChange()"
+      >
         <mat-option *ngFor="let faction of factions" [value]="faction">
           {{ faction }}
         </mat-option>
       </mat-select>
     </mat-form-field>
+
+    <ng-container *ngIf="selectedFaction">
+      <mat-form-field appearance="outline">
+        <mat-label>Favorite Hero</mat-label>
+        <mat-select [(ngModel)]="selectedHero">
+          <mat-option
+            *ngFor="let hero of heroesByFaction[selectedFaction]"
+            [value]="hero"
+          >
+            {{ hero }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-container>
+  </div>
+  <div class="row">
     <mat-form-field appearance="outline">
       <mat-label>Your Skill</mat-label>
       <mat-select>
