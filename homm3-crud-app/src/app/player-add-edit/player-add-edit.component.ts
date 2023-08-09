@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { PlayersService } from '../services/players.service';
+import { DialogRef } from '@angular/cdk/dialog';
 
 interface HeroData {
   [key: string]: string[];
@@ -11,7 +13,11 @@ interface HeroData {
   styleUrls: ['./player-add-edit.component.scss'],
 })
 export class PlayerAddEditComponent {
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private playersService: PlayersService,
+    private dialogRef: DialogRef<PlayerAddEditComponent>
+  ) {
     this.playerForm = this.fb.group({
       firstName: '',
       lastName: '',
@@ -222,7 +228,15 @@ export class PlayerAddEditComponent {
 
   onFormSubmit() {
     if (this.playerForm.valid) {
-      console.log(this.playerForm.value);
+      this.playersService.addPlayer(this.playerForm.value).subscribe({
+        next: (val: any) => {
+          alert('Player Added Successfully!');
+          this.dialogRef.close();
+        },
+        error: (err: any) => {
+          console.error(err);
+        },
+      });
     }
   }
 }

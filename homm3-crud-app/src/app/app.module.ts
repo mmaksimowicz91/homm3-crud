@@ -15,9 +15,14 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { PlayerAddEditComponent } from './player-add-edit/player-add-edit.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, PlayerAddEditComponent],
@@ -35,8 +40,12 @@ import { PlayerAddEditComponent } from './player-add-edit/player-add-edit.compon
     MatNativeDateModule,
     MatRadioModule,
     MatSelectModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
