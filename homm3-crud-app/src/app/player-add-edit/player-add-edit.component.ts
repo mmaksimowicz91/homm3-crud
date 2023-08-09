@@ -11,6 +11,25 @@ interface HeroData {
   styleUrls: ['./player-add-edit.component.scss'],
 })
 export class PlayerAddEditComponent {
+  constructor(private fb: FormBuilder) {
+    this.playerForm = this.fb.group({
+      firstName: '',
+      lastName: '',
+      nickname: '',
+      email: '',
+      country: '',
+      dateOfBirth: '',
+      gender: '',
+      preferredTypeOfHero: '',
+      preferredStartingBonus: '',
+      favoriteFaction: '',
+      favoriteHero: '',
+      yourSkill: '',
+      yourExperience: '',
+    });
+  }
+  playerForm: FormGroup;
+
   factions: string[] = [
     'Castle',
     'Inferno',
@@ -198,6 +217,12 @@ export class PlayerAddEditComponent {
   selectedHero: string | null = null;
 
   onFactionChange() {
-    this.selectedHero = null;
+    this.playerForm.get('favoriteHero')?.setValue(null);
+  }
+
+  onFormSubmit() {
+    if (this.playerForm.valid) {
+      console.log(this.playerForm.value);
+    }
   }
 }
