@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { PlayersService } from '../services/players.service';
-import { DialogRef } from '@angular/cdk/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CoreService } from '../core/core.service';
 
 interface HeroData {
   [key: string]: string[];
@@ -12,28 +13,32 @@ interface HeroData {
   templateUrl: './player-add-edit.component.html',
   styleUrls: ['./player-add-edit.component.scss'],
 })
-export class PlayerAddEditComponent {
+export class PlayerAddEditComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private playersService: PlayersService,
-    private dialogRef: DialogRef<PlayerAddEditComponent>
+    private dialogRef: MatDialogRef<PlayerAddEditComponent>,
+    private coreService: CoreService,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.playerForm = this.fb.group({
-      firstName: '',
-      lastName: '',
+      fullName: '',
       nickname: '',
       email: '',
       country: '',
       dateOfBirth: '',
       gender: '',
       preferredTypeOfHero: '',
-      preferredStartingBonus: '',
       favoriteFaction: '',
       favoriteHero: '',
       yourSkill: '',
-      yourExperience: '',
     });
   }
+
+  ngOnInit(): void {
+    this.playerForm.patchValue(this.data);
+  }
+
   playerForm: FormGroup;
 
   factions: string[] = [
@@ -228,15 +233,29 @@ export class PlayerAddEditComponent {
 
   onFormSubmit() {
     if (this.playerForm.valid) {
-      this.playersService.addPlayer(this.playerForm.value).subscribe({
-        next: (val: any) => {
-          alert('Player Added Successfully!');
-          this.dialogRef.close();
-        },
-        error: (err: any) => {
-          console.error(err);
-        },
-      });
+      if (this.data) {
+        this.playersService
+          .editPlayer(this.data.id, this.playerForm.value)
+          .subscribe({
+            next: (val: any) => {
+              this.coreService.openSnackBar('Player Updated Successfully!');
+              this.dialogRef.close(true);
+            },
+            error: (err: any) => {
+              console.error(err);
+            },
+          });
+      } else {
+        this.playersService.addPlayer(this.playerForm.value).subscribe({
+          next: (val: any) => {
+            this.coreService.openSnackBar('Player Added Successfully!');
+            this.dialogRef.close(true);
+          },
+          error: (err: any) => {
+            console.error(err);
+          },
+        });
+      }
     }
   }
 }

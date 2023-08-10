@@ -15,4 +15,12 @@ export class PlayersService {
   getPlayerList(): Observable<any> {
     return this.http.get('http://localhost:3000/players');
   }
+
+  deletePlayer(id: number): Observable<any> {
+    return this.http.delete(`http://localhost:3000/players/${id}`);
+  }
+
+  editPlayer(id: number, data: any): Observable<any> {
+    return this.http.put(`http://localhost:3000/players/${id}`, data);
+  }
 }

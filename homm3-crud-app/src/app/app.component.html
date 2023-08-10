@@ -3,104 +3,103 @@
   <span class="example-spacer"></span>
   <button mat-raised-button (click)="openPlayerForm()">ADD PLAYER</button>
 </mat-toolbar>
+<div class="main-body">
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Ex. Mia"
+      #input
+    />
+  </mat-form-field>
 
-<mat-form-field>
-  <mat-label>Filter</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input />
-</mat-form-field>
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+      </ng-container>
 
-<div class="table-container">
-  <table mat-table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-      <td mat-cell *matCellDef="let row">{{ row.id }}</td>
-    </ng-container>
+      <ng-container matColumnDef="fullName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Full Name</th>
+        <td mat-cell *matCellDef="let row">{{ row.fullName }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="firstName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>First Name</th>
-      <td mat-cell *matCellDef="let row">{{ row.firstName }}</td>
-    </ng-container>
+      <ng-container matColumnDef="nickname">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nickname</th>
+        <td mat-cell *matCellDef="let row">{{ row.nickname }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="lastName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</th>
-      <td mat-cell *matCellDef="let row">{{ row.lastName }}</td>
-    </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+        <td mat-cell *matCellDef="let row">{{ row.email }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="nickname">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nickname</th>
-      <td mat-cell *matCellDef="let row">{{ row.nickname }}</td>
-    </ng-container>
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
+        <td mat-cell *matCellDef="let row">{{ row.country }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-      <td mat-cell *matCellDef="let row">{{ row.email }}</td>
-    </ng-container>
+      <ng-container matColumnDef="dateOfBirth">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Birth</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.dateOfBirth | date }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="country">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
-      <td mat-cell *matCellDef="let row">{{ row.country }}</td>
-    </ng-container>
+      <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Gender</th>
+        <td mat-cell *matCellDef="let row">{{ row.gender }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="dateOfBirth">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Date of Birth</th>
-      <td mat-cell *matCellDef="let row">
-        {{ row.dateOfBirth | date }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="preferredTypeOfHero">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Type of Hero</th>
+        <td mat-cell *matCellDef="let row">{{ row.preferredTypeOfHero }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="gender">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Gender</th>
-      <td mat-cell *matCellDef="let row">{{ row.gender }}</td>
-    </ng-container>
+      <ng-container matColumnDef="favoriteFaction">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Favorite Faction
+        </th>
+        <td mat-cell *matCellDef="let row">{{ row.favoriteFaction }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="preferredTypeOfHero">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        Preferred Type of Hero
-      </th>
-      <td mat-cell *matCellDef="let row">{{ row.preferredTypeOfHero }}</td>
-    </ng-container>
+      <ng-container matColumnDef="favoriteHero">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Favorite Hero</th>
+        <td mat-cell *matCellDef="let row">{{ row.favoriteHero }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="preferredStartingBonus">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        Preferred Starting Bonus
-      </th>
-      <td mat-cell *matCellDef="let row">{{ row.preferredStartingBonus }}</td>
-    </ng-container>
+      <ng-container matColumnDef="yourSkill">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Your Skill</th>
+        <td mat-cell *matCellDef="let row">{{ row.yourSkill }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="favoriteFaction">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        Favorite Faction
-      </th>
-      <td mat-cell *matCellDef="let row">{{ row.favoriteFaction }}</td>
-    </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button color="primary" (click)="editPlayerForm(row)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deletePlayer(row.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="favoriteHero">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Favorite Hero</th>
-      <td mat-cell *matCellDef="let row">{{ row.favoriteHero }}</td>
-    </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
-    <ng-container matColumnDef="yourSkill">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Your Skill</th>
-      <td mat-cell *matCellDef="let row">{{ row.yourSkill }}</td>
-    </ng-container>
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">
+          No data matching the filter "{{ input.value }}"
+        </td>
+      </tr>
+    </table>
 
-    <ng-container matColumnDef="yourExperience">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Your Experience</th>
-      <td mat-cell *matCellDef="let row">{{ row.yourExperience }}</td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
-    <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" colspan="4">
-        No data matching the filter "{{ input.value }}"
-      </td>
-    </tr>
-  </table>
-
-  <mat-paginator
-    [pageSizeOptions]="[5, 10, 25, 100]"
-    aria-label="Select page of users"
-  ></mat-paginator>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page of users"
+    ></mat-paginator>
+  </div>
 </div>

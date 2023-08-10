@@ -5,6 +5,7 @@ import { PlayersService } from './services/players.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { CoreService } from './core/core.service';
 
 @Component({
   selector: 'app-root',
@@ -14,19 +15,17 @@ import { MatTableDataSource } from '@angular/material/table';
 export class AppComponent implements OnInit {
   displayedColumns: string[] = [
     'id',
-    'firstName',
-    'lastName',
+    'fullName',
     'nickname',
     'email',
     'country',
     'dateOfBirth',
     'gender',
     'preferredTypeOfHero',
-    'preferredStartingBonus',
     'favoriteFaction',
     'favoriteHero',
     'yourSkill',
-    'yourExperience',
+    'action',
   ];
   dataSource!: MatTableDataSource<any>;
 
@@ -35,7 +34,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private playersService: PlayersService
+    private playersService: PlayersService,
+    private coreService: CoreService
   ) {}
 
   ngOnInit(): void {
@@ -43,7 +43,14 @@ export class AppComponent implements OnInit {
   }
 
   openPlayerForm() {
-    this.dialog.open(PlayerAddEditComponent);
+    const dialogRef = this.dialog.open(PlayerAddEditComponent);
+    dialogRef.afterClosed().subscribe({
+      next: (val) => {
+        if (val) {
+          this.getPlayersList();
+        }
+      },
+    });
   }
 
   getPlayersList() {
@@ -66,5 +73,27 @@ export class AppComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  deletePlayer(id: number) {
+    this.playersService.deletePlayer(id).subscribe({
+      next: (res) => {
+        this.coreService.openSnackBar('Player deleted!');
+        this.getPlayersList();
+      },
+    });
+  }
+
+  editPlayerForm(data: any) {
+    const dialogRef = this.dialog.open(PlayerAddEditComponent, {
+      data,
+    });
+    dialogRef.afterClosed().subscribe({
+      next: (val) => {
+        if (val) {
+          this.getPlayersList();
+        }
+      },
+    });
   }
 }
