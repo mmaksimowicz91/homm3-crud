@@ -42,19 +42,6 @@
       "favoriteHero": "Tamika",
       "yourSkill": "Pro",
       "id": 3
-    },
-    {
-      "fullName": "Paulina Majewska",
-      "nickname": "Undurel",
-      "email": "patimaj@gmail.com",
-      "country": "Poland",
-      "dateOfBirth": "1998-06-16T22:00:00.000Z",
-      "gender": "female",
-      "preferredTypeOfHero": "might",
-      "favoriteFaction": "Castle",
-      "favoriteHero": "Tyris",
-      "yourSkill": "Amateur",
-      "id": 4
     }
   ]
 }

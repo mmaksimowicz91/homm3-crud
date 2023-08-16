@@ -6,6 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CoreService } from './core/core.service';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -76,11 +77,22 @@ export class AppComponent implements OnInit {
   }
 
   deletePlayer(id: number) {
-    this.playersService.deletePlayer(id).subscribe({
-      next: (res) => {
-        this.coreService.openSnackBar('Player deleted!');
-        this.getPlayersList();
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Delete Confirmation',
+        message: 'Are you sure you want to delete this player?',
       },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.playersService.deletePlayer(id).subscribe({
+          next: (res) => {
+            this.coreService.openSnackBar('Player deleted!');
+            this.getPlayersList();
+          },
+        });
+      }
     });
   }
 

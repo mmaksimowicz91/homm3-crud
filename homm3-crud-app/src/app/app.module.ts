@@ -24,9 +24,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { PlayerAddEditComponent } from './player-add-edit/player-add-edit.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, PlayerAddEditComponent],
+  declarations: [AppComponent, PlayerAddEditComponent, ConfirmDialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
